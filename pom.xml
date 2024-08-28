@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.ericsson.nms</groupId>
+		<artifactId>integration</artifactId>
+		<version>15.2.0.30</version>
+	</parent>
+	<groupId>com.ericsson.nms.services</groupId>
+	<artifactId>SecurityService</artifactId>
+	<version>1.8.81-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<url>http://www.ericsson.com</url>
+	<organization>
+		<name>Ericsson</name>
+	</organization>
+
+	<prerequisites>
+		<maven>3.0.3</maven>
+	</prerequisites>
+
+	<name>[${project.artifactId}] JEE6 Project</name>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <!-- Service Framework Versions -->
+		<version.service.framework>3.1.1</version.service.framework>
+		
+		<!-- Model Service Versions -->
+        <version.modeling.bom>2.3.5</version.modeling.bom>
+        <version.model.deployment.tool>2.3.41</version.model.deployment.tool> <!--maven plugins can't get versions from boms -->
+        
+		<version.ejb>3.1</version.ejb>
+		<version.jee>6</version.jee>
+		<version.jboss.as>6.1.1</version.jboss.as>
+		<version.weld>1.1.10.Final</version.weld>
+		<version.junit>4.10</version.junit>
+		<version.easymock>3.1</version.easymock>
+		<commons-codec>1.9</commons-codec>
+		<version.security.service.api>1.8.51-SNAPSHOT</version.security.service.api>
+        <test.skip>true</test.skip>
+        <test.prop>not testing</test.prop>
+        
+        <!-- Use local jboss container as default -->
+        <test.container>jboss_managed_local</test.container>
+        <test.node.id>psNode1</test.node.id>
+		<jboss.eap.home>jboss-eap-6.1</jboss.eap.home>
+		<jboss.as.modulesdir>modules/system/layers/base</jboss.as.modulesdir>
+		<version.jboss-as-maven-plugin>7.5.Final</version.jboss-as-maven-plugin>
+		<version.jboss.as.arquillian>7.2.0.Final</version.jboss.as.arquillian>
+		<version.arquillian-junit-container>1.0.0.Final</version.arquillian-junit-container>
+		<version.arquillian.bom>1.1.4.Final</version.arquillian.bom>
+		<version.arquillian-weld-se-embedded>1.0.0.CR3</version.arquillian-weld-se-embedded>
+    </properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.ericsson.oss.itpf.sdk</groupId>
+				<artifactId>ServiceFrameworkJBossBOM</artifactId>
+				<version>${version.service.framework}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.ericsson.oss.itpf.sdk</groupId>
+				<artifactId>ServiceFrameworkBOM</artifactId>
+				<version>${version.service.framework}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>			
+			<dependency>
+				<groupId>org.jboss.shrinkwrap.resolver</groupId>
+			  	<artifactId>shrinkwrap-resolver-bom</artifactId>
+			  	<version>2.1.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.arquillian</groupId>
+				<artifactId>arquillian-bom</artifactId>
+				<version>${version.arquillian.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.ericsson.oss.itpf.modeling</groupId>
+				<artifactId>Modeling-BOM</artifactId>
+				<version>${version.modeling.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.arquillian.container</groupId>
+				<artifactId>arquillian-weld-se-embedded-1.1</artifactId>
+				<version>1.0.0.CR3</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.as</groupId>
+				<artifactId>jboss-as-arquillian-container-managed</artifactId>
+				<version>${version.jboss.as.arquillian}</version>
+			</dependency>     
+			<dependency>
+				<groupId>org.jboss.weld</groupId>
+				<artifactId>weld-core</artifactId>
+				<version>${version.weld}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.weld.se</groupId>
+				<artifactId>weld-se-core</artifactId>
+				<version>${version.weld}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+    <build>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-dependency-plugin</artifactId>
+										<versionRange>[2.4,)</versionRange>
+										<goals>
+											<goal>analyze-dep-mgt</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-ear-plugin</artifactId>
+										<versionRange>[2.7,)</versionRange>
+										<goals>
+											<goal>generate-application-xml</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.ericsson.maven.plugins</groupId>
+										<artifactId>rstate-maven-plugin</artifactId>
+										<versionRange>[1.0,)</versionRange>
+										<goals>
+											<goal>rstate</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											build-helper-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.7,)
+										</versionRange>
+										<goals>
+											<goal>regex-property</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.jboss.as.plugins</groupId>
+					<artifactId>jboss-as-maven-plugin</artifactId>
+					<version>${version.jboss-as-maven-plugin}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+    </build>
+
+    <dependencies>
+         <dependency>
+			<groupId>com.ericsson.oss.itpf.sdk</groupId>
+			<artifactId>service-framework-dist</artifactId>
+            <scope>provided</scope>
+		</dependency>        
+         <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <scope>provided</scope>
+        </dependency>
+		<dependency>
+  			<groupId>commons-codec</groupId>
+  			<artifactId>commons-codec</artifactId>
+  			<version>${commons-codec}</version>
+		</dependency>        
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>${version.easymock}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.8.3-redhat-2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.spec</groupId>
+			<artifactId>jboss-javaee-6.0</artifactId>
+			<version>1.0.0.Final</version>
+			<type>pom</type>
+		</dependency>        
+    </dependencies>
+	<modules>
+		<module>SecurityService-api</module>
+		<module>SecurityService-jar</module>
+		<module>SecurityService-ejb</module>
+		<module>SecurityService-ear</module>
+		<module>ERICsecuritysvc_CXP9023099</module>
+		<module>testsuite</module>
+	</modules>
+	
+	<profiles>
+		<!-- -Dts to activate testsuite-->
+		<profile>
+			<id>activate_testsuite</id>
+			<activation>
+				<property><name>ts</name></property>
+			</activation>
+			<properties>
+				<test.skip>false</test.skip>
+				<test.prop>testing</test.prop>
+			</properties>
+		</profile>
+        
+	</profiles>
+</project>

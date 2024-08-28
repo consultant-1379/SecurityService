@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>SecurityService</artifactId>
+		<groupId>com.ericsson.nms.services</groupId>
+		<version>1.8.81-SNAPSHOT</version>
+	</parent>
+	<artifactId>SecurityService-api</artifactId>
+	<name>[${project.parent.artifactId}] API module</name>
+
+	<properties>
+		<version.javax.validation>1.0.0.GA</version.javax.validation>
+	</properties>
+
+	<dependencies>
+		<!-- DO NOT DELETE THIS DEPENDENCY. IT CONTAINS SERVICE FRAMEWORK ANNOTATION 
+			PROCESSORS AND IS REQUIRED TO AUTOMATICALLY GENERATE ARTIFACTS REQUIRED BY 
+			SERVICE FRAMEWORK. -->
+<!-- 		<dependency>
+			<groupId>com.ericsson.oss.itpf.sdk</groupId>
+			<artifactId>sdk-maven-plugin</artifactId>
+			<scope>provided</scope>
+		</dependency> -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+<!-- 		<dependency>
+			<groupId>com.ericsson.oss.itpf.sdk</groupId>
+			<artifactId>sdk-config-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.ericsson.oss.itpf.sdk</groupId>
+			<artifactId>sdk-eventbus-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.ericsson.oss.itpf.sdk</groupId>
+			<artifactId>sdk-instrumentation-api</artifactId>
+		</dependency> -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+<!--
+ 		<dependency>
+			<groupId>com.ericsson.oss.itpf.sdk</groupId>
+			<artifactId>sdk-modeled-eventbus-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.ericsson.oss.itpf.sdk</groupId>
+			<artifactId>sdk-cache-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.ericsson.oss.itpf.sdk</groupId>
+			<artifactId>sdk-cluster-api</artifactId>
+		</dependency>
+-->
+	 	<dependency>
+			<groupId>com.ericsson.oss.itpf.sdk</groupId>
+			<artifactId>sdk-core-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.ericsson.oss.itpf.sdk</groupId>
+			<artifactId>sdk-upgrade-api</artifactId>
+<!--		no need to specify version if imported Service Framework BOM  -->
+		</dependency>
+	</dependencies>
+</project>
